@@ -2,17 +2,17 @@
     "frame": {
       "name": "Frame Idea Generator",
       "version": "1",
-      "iconUrl": "/icon.png",
-      "homeUrl": "/",
-      "imageUrl": "/og-image.png",
+      "iconUrl": "https://www.mini-appgenerator.xyz/icon.png",
+      "homeUrl": "https://www.mini-appgenerator.xyz",
+      "imageUrl": "https://www.mini-appgenerator.xyz/og-image.png",
       "buttonTitle": "Launch",
-      "splashImageUrl": "/splash.png",
+      "splashImageUrl": "https://www.mini-appgenerator.xyz/splash.png",
       "splashBackgroundColor": "#003049",
-      "webhookUrl": "/api/webhook",
+      "webhookUrl": "https://www.mini-appgenerator.xyz/api/webhook",
       "subtitle": "Generate ideas for your first mini-app",
       "description": "A mini-application for Farcaster that generates creative ideas for mini-apps by combining random elements from three categories: artifacts, themes, and industries.",
       "primaryCategory": "art-creativity",
-      "heroImageUrl": "/og-image.png",
+      "heroImageUrl": "https://www.mini-appgenerator.xyz/og-image.png",
       "tags": [
         "creativity",
         "ideas",
@@ -24,6 +24,6 @@
       "tagline": "Generate a bunch of ideas!",
       "ogTitle": "Frame Idea Generator",
       "ogDescription": "Get a bunch of ideas on what to build on Farcaster",
-      "ogImageUrl": "/og-image.png"
+      "ogImageUrl": "https://www.mini-appgenerator.xyz/og-image.png"
     }
   }
