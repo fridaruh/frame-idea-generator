@@ -1,3 +1,5 @@
+// src/App.tsx - Versión optimizada usando isInMiniApp()
+
 import React, { useState, useCallback, useEffect } from 'react';
 import { CurrentSelection, LockStates, ElementType, AppState, MiniAppIdea } from './types';
 import { getRandomElement } from './data';
@@ -14,6 +16,7 @@ import { InitialPopup } from './components/InitialPopup';
 function App() {
   const [showInitialPopup, setShowInitialPopup] = useState(true);
   const [sdkReady, setSdkReady] = useState(false);
+  const [isInMiniApp, setIsInMiniApp] = useState(false);
 
   // Initialize with random values
   const [currentSelection, setCurrentSelection] = useState<CurrentSelection>(() => ({
@@ -35,42 +38,65 @@ function App() {
     isLoading: false,
   });
 
-  // Initialize Farcaster SDK properly
+  // Initialize Farcaster SDK with isInMiniApp()
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    
     const initializeFarcaster = async () => {
       try {
-        // Import the SDK
+        // Set a timeout to prevent hanging
+        timeoutId = setTimeout(() => {
+          console.log('SDK initialization timeout - continuing without Farcaster context');
+          setSdkReady(true);
+          setIsInMiniApp(false);
+        }, 3000);
+
+        // Dynamically import the SDK
         const { sdk } = await import('@farcaster/miniapp-sdk');
         
-        // Check if we're actually in a Mini App context
-        const isInMiniApp = await sdk.isInMiniApp();
+        // Check if we're in a mini app using the official method
+        const inMiniApp = sdk.context.isInMiniApp();
+        setIsInMiniApp(inMiniApp);
         
-        if (isInMiniApp) {
-          console.log('Running in Farcaster Mini App context');
+        if (inMiniApp) {
+          console.log('Running inside Farcaster Mini App');
           
-          // CRITICAL: Call ready() to hide the loading screen
-          await sdk.actions.ready();
+          // Initialize the SDK
+          const initPromise = sdk.actions.ready();
+          const timeoutPromise = new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('SDK timeout')), 2000)
+          );
           
-          // Set up event listeners
-          (sdk as any).events?.on('ready', () => {
-            console.log('Farcaster Mini App SDK ready');
-          });
+          await Promise.race([initPromise, timeoutPromise]);
           
-          (sdk as any).events?.on('error', (error: any) => {
-            console.error('Farcaster SDK error:', error);
-          });
+          // Get additional context if needed
+          const context = sdk.context.client;
+          console.log('Farcaster context:', context);
+          
+          clearTimeout(timeoutId);
+          console.log('Farcaster Mini App SDK initialized successfully');
         } else {
-          console.log('Running in regular web context');
+          console.log('Running outside Mini App context (development/web)');
+          clearTimeout(timeoutId);
         }
         
         setSdkReady(true);
+        
       } catch (error) {
         console.warn('Farcaster SDK initialization failed:', error);
+        clearTimeout(timeoutId);
+        setIsInMiniApp(false);
         setSdkReady(true); // Continue anyway
       }
     };
 
     initializeFarcaster();
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
   }, []);
 
   const handleStartApp = useCallback(() => {
@@ -120,6 +146,18 @@ function App() {
         ideas,
         isLoading: false,
       }));
+
+      // Track analytics if in mini app
+      if (isInMiniApp) {
+        try {
+          const { sdk } = await import('@farcaster/miniapp-sdk');
+          // You could send analytics here if the SDK supports it
+          console.log('Ideas generated in Mini App context');
+        } catch (error) {
+          console.warn('Analytics tracking failed:', error);
+        }
+      }
+
     } catch (error) {
       console.error('Error generating ideas:', error);
       setAppState(prev => ({
@@ -127,7 +165,7 @@ function App() {
         isLoading: false,
       }));
     }
-  }, [currentSelection]);
+  }, [currentSelection, isInMiniApp]);
 
   const handleBackToGenerator = useCallback(() => {
     setAppState(prev => ({
@@ -147,7 +185,9 @@ function App() {
       <div className="min-h-screen bg-gradient-to-br from-[#003049] via-[#f77f00] to-[#d62828] flex items-center justify-center">
         <div className="text-center text-white">
           <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-lg font-medium">Cargando Frame Idea Generator...</p>
+          <p className="text-lg font-medium">
+            {isInMiniApp ? 'Iniciando Mini App...' : 'Cargando Frame Idea Generator...'}
+          </p>
         </div>
       </div>
     );
@@ -173,9 +213,15 @@ function App() {
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <Instructions />
       
+      {/* Debug info in development */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="fixed bottom-4 left-4 bg-black bg-opacity-75 text-white p-2 rounded text-xs">
+          Mini App: {isInMiniApp ? 'Yes' : 'No'}
+        </div>
+      )}
+      
       {/* Main content area */}
       <div className="flex-1 flex flex-col lg:flex-row">
-        {/* Artefacto - Prussian Blue */}
         <ElementBlock
           type="artefacto"
           value={currentSelection.artefacto}
@@ -184,7 +230,6 @@ function App() {
           className="bg-[#003049]"
         />
 
-        {/* Tema - Orange Wheel */}
         <ElementBlock
           type="tema"
           value={currentSelection.tema}
@@ -193,7 +238,6 @@ function App() {
           className="bg-[#f77f00]"
         />
 
-        {/* Industria - Fire Engine Red */}
         <ElementBlock
           type="industria"
           value={currentSelection.industria}
@@ -203,14 +247,12 @@ function App() {
         />
       </div>
 
-      {/* Prompt display */}
       <PromptDisplay 
         selection={currentSelection} 
         onGenerateIdeas={handleGenerateIdeas}
         isGenerating={appState.isLoading}
       />
 
-      {/* Hidden instruction for screen readers */}
       <div className="sr-only" aria-live="polite">
         Prompt actual: Hay un {currentSelection.artefacto} en el contexto de {currentSelection.tema} que impacta en {currentSelection.industria}
       </div>
