@@ -1,0 +1,33 @@
+{
+    "frame": {
+      "name": "Mini-app Generator",
+      "version": "1",
+      "iconUrl": "https://mini-appgenerator.xyz/icon.png",
+      "homeUrl": "https://mini-appgenerator.xyz",
+      "imageUrl": "https://firebasestorage.googleapis.com/v0/b/galeryproject-8ff43.appspot.com/o/mini-app%2Fmini-1.jpg?alt=media&token=df7156ab-06f4-4335-8e7a-0e247eae311e",
+      "buttonTitle": "Launch",
+      "splashImageUrl": "https://firebasestorage.googleapis.com/v0/b/galeryproject-8ff43.appspot.com/o/mini-app%2Fmini-splash.png?alt=media&token=fb2e76bf-fa34-4d44-a9b6-12ec3299682f",
+      "splashBackgroundColor": "#0d1b2a",
+      "webhookUrl": "https://mini-appgenerator.xyz/api/webhook",
+      "subtitle": "Generate ideas for your first mini-app",
+      "description": "A mini-application for Farcaster that generates creative ideas for mini-apps by combining random elements from three categories: artifacts, themes, and industries.",
+      "primaryCategory": "art-creativity",
+      "heroImageUrl": "https://firebasestorage.googleapis.com/v0/b/galeryproject-8ff43.appspot.com/o/mini-app%2Fmini-2.jpg?alt=media&token=6dbfe0b6-087b-40a4-8731-1e72887138a9",
+      "tags": [
+        "creativity",
+        "ideas",
+        "community",
+        "build",
+        "mini-app"
+      ],
+      "tagline": "Generate a bunch of ideas!",
+      "ogTitle": "Mini-app Generator",
+      "ogDescription": "Get a bunch of ideas on what to build on farcaster",
+      "ogImageUrl": "https://firebasestorage.googleapis.com/v0/b/galeryproject-8ff43.appspot.com/o/mini-app%2Fmini-splash.png?alt=media&token=fb2e76bf-fa34-4d44-a9b6-12ec3299682f"
+    },
+    "accountAssociation": {
+      "header": "eyJmaWQiOjg3MzAxNywidHlwZSI6ImF1dGgiLCJrZXkiOiIweDZENEZDM0NENDhiRTQ5MjRiZDIxRjFERmU5QzJiMjAwY2NhODFmZkYifQ",
+      "payload": "eyJkb21haW4iOiJtaW5pLWFwcGdlbmVyYXRvci54eXoifQ",
+      "signature": "cwArCprPcPF5tPA6ydUQi8nEHzBZJVNwwvMIqTTIG4xcyc+U0BQicBZi1tiqGVcOa7DCdLrj/kr6aHD2pMC2VRw="
+    }
+  }
