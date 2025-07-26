@@ -38,14 +38,30 @@ function App() {
   useEffect(() => {
     const initializeFarcaster = async () => {
       try {
-        // Check if we're in a Farcaster environment (iframe)
-        const isInFarcaster = typeof window !== 'undefined' && window.parent !== window;
+        // Check if we're in a Farcaster environment (iframe or specific user agent)
+        const isInFarcaster = typeof window !== 'undefined' && (
+          window.parent !== window || 
+          window.location.hostname.includes('farcaster') ||
+          navigator.userAgent.includes('Farcaster')
+        );
         
         if (isInFarcaster) {
           // Dynamically import and initialize Farcaster SDK
           const { sdk } = await import('@farcaster/miniapp-sdk');
+          
+          // Initialize the SDK
           await sdk.actions.ready();
-          console.log('Farcaster Mini App SDK initialized');
+          
+          // Set up event listeners for SDK events
+          sdk.events.on('ready', () => {
+            console.log('Farcaster Mini App SDK ready');
+          });
+          
+          sdk.events.on('error', (error) => {
+            console.error('Farcaster SDK error:', error);
+          });
+          
+          console.log('Farcaster Mini App SDK initialized successfully');
         } else {
           console.log('Running in development mode - Farcaster SDK not needed');
         }

@@ -16,7 +16,7 @@ Una mini-aplicación para Farcaster que genera ideas creativas para mini-apps co
 - **Frontend**: React 18 + TypeScript + Vite
 - **Estilos**: Tailwind CSS
 - **Iconos**: Lucide React
-- **SDK**: @farcaster/miniapp-sdk
+- **SDK**: @farcaster/miniapp-sdk v0.1.7
 - **IA**: OpenAI GPT-4o-mini
 - **Despliegue**: Compatible con Vercel, Netlify, etc.
 

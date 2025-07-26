@@ -1,0 +1,9 @@
+/*
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: cross-origin
+  X-Frame-Options: ALLOWALL
+
+/.well-known/farcaster.json
+  Content-Type: application/json
+  Access-Control-Allow-Origin: * 
