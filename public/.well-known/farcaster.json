@@ -1,10 +1,40 @@
 {
-    "name": "Frame Idea Generator",
-    "version": "1.0.0",
-    "description": "Genera ideas creativas para mini-apps de Farcaster combinando elementos aleatorios",
-    "iconUrl": "https://www.mini-appgenerator.xyz/icon.png",
-    "imageUrl": "https://www.mini-appgenerator.xyz/og-image.png",
-    "buttonTitle": "Launch App",
-    "splashImageUrl": "https://www.mini-appgenerator.xyz/splash.png",
-    "splashBackgroundColor": "#003049"
+    "frame": {
+      "name": "Frame Idea Generator",
+      "version": "1",
+      "iconUrl": "https://www.mini-appgenerator.xyz/icon.png",
+      "homeUrl": "https://www.mini-appgenerator.xyz",
+      "imageUrl": "https://www.mini-appgenerator.xyz/og-image.png",
+      "buttonTitle": "Launch",
+      "buttons": [
+        {
+          "label": "Launch",
+          "action": "launch"
+        }
+      ],
+      "splashImageUrl": "https://www.mini-appgenerator.xyz/splash.png",
+      "splashBackgroundColor": "#003049",
+      "webhookUrl": "https://www.mini-appgenerator.xyz/api/webhook",
+      "subtitle": "Generate ideas for your first mini-app",
+      "description": "A mini-application for Farcaster that generates creative ideas for mini-apps by combining random elements from three categories: artifacts, themes, and industries.",
+      "primaryCategory": "art-creativity",
+      "heroImageUrl": "https://www.mini-appgenerator.xyz/og-image.png",
+      "tags": [
+        "creativity",
+        "ideas",
+        "community",
+        "build",
+        "mini-app",
+        "farcaster"
+      ],
+      "tagline": "Generate a bunch of ideas!",
+      "ogTitle": "Frame Idea Generator",
+      "ogDescription": "Get a bunch of ideas on what to build on Farcaster",
+      "ogImageUrl": "https://www.mini-appgenerator.xyz/og-image.png"
+    },
+    "accountAssociation": {
+      "header": "eyJmaWQiOjg3MzAxNywidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDg2ZjEwRGEwQjBBQTM2NzA4YTFFMDVlQ2JBODcxY0U3M2ZkMGEzQzIifQ",
+      "payload": "eyJkb21haW4iOiJ3d3cubWluaS1hcHBnZW5lcmF0b3IueHl6In0",
+      "signature": "MHgyYTQ5MTViZGQzNjYwMzQ3YWE4ODZjZWZkNjZlODJhMDMyYmE5YjY2NGEwMTBlZTYxZjk0MmQ3NzAzYzU1NTMxNGM2NGYxOGU2MDE0ZTQ0Mzc1ZGQ1ZThhNTFlYjVlZTBmMTI3NzU0ZjliMGQwYTBlNmE5Y2ViYWY4NjFhOWY5MzFi"
+    }
   }
