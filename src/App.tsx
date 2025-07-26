@@ -13,6 +13,7 @@ import { InitialPopup } from './components/InitialPopup';
 
 function App() {
   const [showInitialPopup, setShowInitialPopup] = useState(true);
+  const [sdkReady, setSdkReady] = useState(false);
 
   // Initialize with random values
   const [currentSelection, setCurrentSelection] = useState<CurrentSelection>(() => ({
@@ -34,43 +35,63 @@ function App() {
     isLoading: false,
   });
 
-  // Initialize Farcaster SDK only when in Farcaster context
+  // Initialize Farcaster SDK with timeout
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    
     const initializeFarcaster = async () => {
       try {
-        // Check if we're in a Farcaster environment (iframe or specific user agent)
+        // Set a timeout to prevent hanging
+        timeoutId = setTimeout(() => {
+          console.log('SDK initialization timeout - continuing without Farcaster context');
+          setSdkReady(true);
+        }, 3000); // 3 second timeout
+
+        // Check if we're in a Farcaster environment
         const isInFarcaster = typeof window !== 'undefined' && (
           window.parent !== window || 
           window.location.hostname.includes('farcaster') ||
-          navigator.userAgent.includes('Farcaster')
+          navigator.userAgent.includes('Farcaster') ||
+          window.location.search.includes('farcaster')
         );
         
         if (isInFarcaster) {
           // Dynamically import and initialize Farcaster SDK
           const { sdk } = await import('@farcaster/miniapp-sdk');
           
-          // Initialize the SDK
-          await sdk.actions.ready();
+          // Initialize the SDK with timeout
+          const initPromise = sdk.actions.ready();
+          const timeoutPromise = new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('SDK timeout')), 2000)
+          );
           
-          // Set up event listeners for SDK events
-          sdk.events.on('ready', () => {
-            console.log('Farcaster Mini App SDK ready');
-          });
+          await Promise.race([initPromise, timeoutPromise]);
           
-          sdk.events.on('error', (error) => {
-            console.error('Farcaster SDK error:', error);
-          });
+          // Clear the timeout since we succeeded
+          clearTimeout(timeoutId);
           
           console.log('Farcaster Mini App SDK initialized successfully');
+          setSdkReady(true);
         } else {
           console.log('Running in development mode - Farcaster SDK not needed');
+          clearTimeout(timeoutId);
+          setSdkReady(true);
         }
       } catch (error) {
         console.warn('Farcaster SDK initialization failed:', error);
+        clearTimeout(timeoutId);
+        setSdkReady(true); // Continue anyway
       }
     };
 
     initializeFarcaster();
+
+    // Cleanup timeout on unmount
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
   }, []);
 
   const handleStartApp = useCallback(() => {
@@ -141,6 +162,18 @@ function App() {
   useDoubleTap(appState.view === 'generator' && !showInitialPopup ? generateNewElements : () => {});
   useOrientationRefresh();
 
+  // Show loading state while SDK initializes
+  if (!sdkReady) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#003049] via-[#f77f00] to-[#d62828] flex items-center justify-center">
+        <div className="text-center text-white">
+          <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-lg font-medium">Cargando Frame Idea Generator...</p>
+        </div>
+      </div>
+    );
+  }
+
   // Show initial popup
   if (showInitialPopup) {
     return <InitialPopup onStart={handleStartApp} />;
@@ -207,4 +240,3 @@ function App() {
 }
 
 export default App;
-
