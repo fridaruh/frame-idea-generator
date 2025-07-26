@@ -35,63 +35,42 @@ function App() {
     isLoading: false,
   });
 
-  // Initialize Farcaster SDK with timeout
+  // Initialize Farcaster SDK properly
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-    
     const initializeFarcaster = async () => {
       try {
-        // Set a timeout to prevent hanging
-        timeoutId = setTimeout(() => {
-          console.log('SDK initialization timeout - continuing without Farcaster context');
-          setSdkReady(true);
-        }, 3000); // 3 second timeout
-
-        // Check if we're in a Farcaster environment
-        const isInFarcaster = typeof window !== 'undefined' && (
-          window.parent !== window || 
-          window.location.hostname.includes('farcaster') ||
-          navigator.userAgent.includes('Farcaster') ||
-          window.location.search.includes('farcaster')
-        );
+        // Import the SDK
+        const { sdk } = await import('@farcaster/miniapp-sdk');
         
-        if (isInFarcaster) {
-          // Dynamically import and initialize Farcaster SDK
-          const { sdk } = await import('@farcaster/miniapp-sdk');
+        // Check if we're actually in a Mini App context
+        const isInMiniApp = await sdk.isInMiniApp();
+        
+        if (isInMiniApp) {
+          console.log('Running in Farcaster Mini App context');
           
-          // Initialize the SDK with timeout
-          const initPromise = sdk.actions.ready();
-          const timeoutPromise = new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('SDK timeout')), 2000)
-          );
+          // CRITICAL: Call ready() to hide the loading screen
+          await sdk.actions.ready();
           
-          await Promise.race([initPromise, timeoutPromise]);
+          // Set up event listeners
+          (sdk as any).events?.on('ready', () => {
+            console.log('Farcaster Mini App SDK ready');
+          });
           
-          // Clear the timeout since we succeeded
-          clearTimeout(timeoutId);
-          
-          console.log('Farcaster Mini App SDK initialized successfully');
-          setSdkReady(true);
+          (sdk as any).events?.on('error', (error: any) => {
+            console.error('Farcaster SDK error:', error);
+          });
         } else {
-          console.log('Running in development mode - Farcaster SDK not needed');
-          clearTimeout(timeoutId);
-          setSdkReady(true);
+          console.log('Running in regular web context');
         }
+        
+        setSdkReady(true);
       } catch (error) {
         console.warn('Farcaster SDK initialization failed:', error);
-        clearTimeout(timeoutId);
         setSdkReady(true); // Continue anyway
       }
     };
 
     initializeFarcaster();
-
-    // Cleanup timeout on unmount
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
   }, []);
 
   const handleStartApp = useCallback(() => {
