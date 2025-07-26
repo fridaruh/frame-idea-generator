@@ -32,11 +32,9 @@
       "ogDescription": "Get a bunch of ideas on what to build on Farcaster",
       "ogImageUrl": "https://www.mini-appgenerator.xyz/og-image.png"
     },
-    
-        "accountAssociation": {
-          "header": "eyJmaWQiOjg3MzAxNywidHlwZSI6ImF1dGgiLCJrZXkiOiIweDZENEZDM0NENDhiRTQ5MjRiZDIxRjFERmU5QzJiMjAwY2NhODFmZkYifQ",
-          "payload": "eyJkb21haW4iOiJ3d3cubWluaS1hcHBnZW5lcmF0b3IueHl6In0",
-          "signature": "tddfySoJhqf4f6JOiVLzCy3cO5krf/6TuYF1A9yTm2pAoPVVBwwRWSmjmuO8TtYryrsuGzuPpJHiuZkldZFfZBs="
-        }
-      
+    "accountAssociation": {
+      "header": "eyJmaWQiOjg3MzAxNywidHlwZSI6ImF1dGgiLCJrZXkiOiIweDZENEZDM0NENDhiRTQ5MjRiZDIxRjFERmU5QzJiMjAwY2NhODFmZkYifQ",
+      "payload": "eyJkb21haW4iOiJ3d3cubWluaS1hcHBnZW5lcmF0b3IueHl6In0",
+      "signature": "tddfySoJhqf4f6JOiVLzCy3cO5krf/6TuYF1A9yTm2pAoPVVBwwRWSmjmuO8TtYryrsuGzuPpJHiuZkldZFfZBs="
+    }
   }
