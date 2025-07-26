@@ -15,7 +15,7 @@
       "splashImageUrl": "https://www.mini-appgenerator.xyz/splash.png",
       "splashBackgroundColor": "#003049",
       "webhookUrl": "https://www.mini-appgenerator.xyz/api/webhook",
-      "subtitle": "Generate ideas for your first mini-app",
+      "subtitle": "Generate mini-app ideas",
       "description": "A mini-application for Farcaster that generates creative ideas for mini-apps by combining random elements from three categories: artifacts, themes, and industries.",
       "primaryCategory": "art-creativity",
       "heroImageUrl": "https://www.mini-appgenerator.xyz/og-image.png",
@@ -24,8 +24,7 @@
         "ideas",
         "community",
         "build",
-        "mini-app",
-        "farcaster"
+        "mini-app"
       ],
       "tagline": "Generate a bunch of ideas!",
       "ogTitle": "Frame Idea Generator",
