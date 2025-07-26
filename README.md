@@ -189,7 +189,7 @@ Este proyecto está bajo la Licencia MIT. Ver `LICENSE` para más detalles.
 
 Si tienes preguntas o problemas:
 - Abre un issue en GitHub
-- Contacta en Farcaster: [tu-handle]
+- Contacta en Farcaster: @FridaRuh
 
 ---
 
