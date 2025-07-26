@@ -6,6 +6,12 @@
       "homeUrl": "https://www.mini-appgenerator.xyz",
       "imageUrl": "https://www.mini-appgenerator.xyz/og-image.png",
       "buttonTitle": "Launch",
+      "buttons": [
+        {
+          "label": "Launch",
+          "action": "launch"
+        }
+      ],
       "splashImageUrl": "https://www.mini-appgenerator.xyz/splash.png",
       "splashBackgroundColor": "#003049",
       "webhookUrl": "https://www.mini-appgenerator.xyz/api/webhook",
