@@ -22,10 +22,10 @@
     <meta name="twitter:image" content="https://www.mini-appgenerator.xyz/og-image.png" />
     
     <!-- Farcaster Mini App Embed -->
-    <meta name="fc:miniapp" content='{"version":"1","name":"Frame Idea Generator","description":"Genera ideas creativas para mini-apps de Farcaster combinando elementos aleatorios","icon":"https://www.mini-appgenerator.xyz/icon.png","imageUrl":"https://www.mini-appgenerator.xyz/og-image.png","buttonTitle":"Launch","splash":{"image":"https://www.mini-appgenerator.xyz/splash.png","backgroundColor":"#003049"},"action":{"type":"launch"}}' />
+    <meta name="fc:miniapp" content='{"version":"1","name":"Frame Idea Generator","description":"Genera ideas creativas para mini-apps de Farcaster combinando elementos aleatorios","icon":"https://www.mini-appgenerator.xyz/icon.png","imageUrl":"https://www.mini-appgenerator.xyz/og-image.png","buttonTitle":"Launch","splash":{"image":"https://www.mini-appgenerator.xyz/splash.png","backgroundColor":"#003049"},"action":{"type":"launch","url":"https://www.mini-appgenerator.xyz/"}}' />
     
     <!-- Farcaster Frame Embed (for compatibility) -->
-    <meta name="fc:frame" content='{"version":"1","name":"Frame Idea Generator","description":"Genera ideas creativas para mini-apps de Farcaster combinando elementos aleatorios","icon":"https://www.mini-appgenerator.xyz/icon.png","imageUrl":"https://www.mini-appgenerator.xyz/og-image.png","buttonTitle":"Launch","splash":{"image":"https://www.mini-appgenerator.xyz/splash.png","backgroundColor":"#003049"},"action":{"type":"launch"}}' />
+    <meta name="fc:frame" content='{"version":"1","name":"Frame Idea Generator","description":"Genera ideas creativas para mini-apps de Farcaster combinando elementos aleatorios","icon":"https://www.mini-appgenerator.xyz/icon.png","imageUrl":"https://www.mini-appgenerator.xyz/og-image.png","buttonTitle":"Launch","splash":{"image":"https://www.mini-appgenerator.xyz/splash.png","backgroundColor":"#003049"},"action":{"type":"launch","url":"https://www.mini-appgenerator.xyz/"}}' />
     
     <!-- Theme color for mobile browsers -->
     <meta name="theme-color" content="#003049" />
@@ -35,6 +35,31 @@
   </head>
   <body>
     <div id="root"></div>
+    
+    <!-- Farcaster Launch Button -->
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+      <button 
+        id="farcaster-launch-btn"
+        style="
+          background: #003049;
+          color: white;
+          border: none;
+          padding: 12px 24px;
+          border-radius: 8px;
+          font-size: 16px;
+          font-weight: 600;
+          cursor: pointer;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+          transition: all 0.2s ease;
+        "
+        onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.2)'"
+        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)'"
+        onclick="window.location.href='https://www.mini-appgenerator.xyz/'"
+      >
+        Launch App
+      </button>
+    </div>
+    
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
